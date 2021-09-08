@@ -19,6 +19,8 @@ def home():
 def official_bsccs_dc_bridge():
     data = json.loads(request.data)
 
+    print(f"{data['senderName']} -> {data['senderMessage']}")
+
     message = f"""
 ```
 {data["senderMessage"]}
@@ -38,6 +40,8 @@ def official_bsccs_dc_bridge():
 @app.route("/unofficial-bsccs-dc-bridge", methods=["POST"])
 def unofficial_bsccs_dc_bridge():
     data = json.loads(request.data)
+
+    print(f"{data['senderName']} -> {data['senderMessage']}")
 
     message = f"""
 ```
