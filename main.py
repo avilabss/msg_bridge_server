@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return jsonify({"message": "AutoReply server v1.0"})
+    return jsonify({"message": "Message Bridge Server v1.2 ✨"})
 
 
 @app.route("/wadc-bridge", methods=["POST"])
