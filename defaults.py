@@ -3,3 +3,5 @@ UNOFFICIAL_BSCCS_DC_WEBHOOK = "https://discord.com/api/webhooks/8848180324703929
 
 HEADERS = {"content-type": "application/json"}
 MAX_SEND_TRIES = 3
+
+IGNORE_TITLES = ["WhatsApp"]
