@@ -21,7 +21,7 @@ def send_message_to_discord(webhook, message_by, message):
 def handle_wadc_bridge(form):
     payload_title = form.get("title")
     parsed_title = [x.strip() for x in payload_title.split(":") if x.strip() != ""]
-    payload_text = form.get("text")
+    payload_text = f"```{form.get('text')}```"
     sender = parsed_title[-1] if len(parsed_title) >= 2 else "Unknown"
 
     for title in IGNORE_TITLES:
