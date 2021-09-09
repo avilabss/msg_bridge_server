@@ -33,5 +33,10 @@ def handle_wadc_bridge(form):
             OFFICIAL_BSCCS_DC_WEBHOOK, sender, payload_text)
 
     elif "BSC CS" in payload_title:
-        send_message_to_discord(
-            UNOFFICIAL_BSCCS_DC_WEBHOOK, sender, payload_text)
+        send_message_to_discord(UNOFFICIAL_BSCCS_DC_WEBHOOK, sender, payload_text)
+
+    elif "Core Java SY BSC CS" in payload_title:
+        send_message_to_discord(CORE_JAVA_DC_WEBHOOK, sender, payload_text)
+
+    elif "DBMS SY BSC CS" in payload_title:
+        send_message_to_discord(DBMS_DC_WEBHOOK, sender, payload_text)
