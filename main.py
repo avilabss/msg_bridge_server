@@ -1,31 +1,33 @@
-from helpers import handle_wadc_bridge
+from fastapi import FastAPI, Form, Depends
+from typing import Optional
 
-from flask import Flask, request, jsonify
-from threading import Thread
-from datetime import datetime
-
-
-app = Flask(__name__)
+from helpers import handle_wadc_bridge, get_config
 
 
-@app.route("/")
+app = FastAPI(
+    title="OxyProxy Node Backend",
+    openapi_url=None,
+    docs_url=None,
+    redoc_url=None,
+)
+
+
+@app.get("/")
 def home():
-    return jsonify({"message": "Message Bridge Server v1.2 ✨"})
+    return {"message": "Message Bridge Server v1.2 ✨"}
 
 
-@app.route("/wadc-bridge", methods=["POST"])
-def wadc_bridge():
-    print(f"Received: {request.form}")
-
-    thread = Thread(target=handle_wadc_bridge, args=[request.form])
-    thread.start()
-
-    return ('', 204)
-
-
-@app.route("/test", methods=["POST"])
-def test():
-    print(request.data)
-    print(request.form)
-
-    return ('', 204)
+@app.post("/discord/", status_code=204)
+def wadc_bridge(
+    name: Optional[str] = Form(None),
+    pkg: Optional[str] = Form(None),
+    title: Optional[str] = Form(None),
+    text: Optional[str] = Form(None),
+    subtext: Optional[str] = Form(None),
+    bigtext: Optional[str] = Form(None),
+    infotext: Optional[str] = Form(None),
+    config: dict = Depends(get_config)
+):
+    print(f"Received: {title} - {text}")
+    handle_wadc_bridge(config, title, text)
+    return ""

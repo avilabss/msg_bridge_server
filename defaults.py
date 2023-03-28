@@ -1,9 +1,12 @@
-import os
+import json
+from functools import lru_cache
 
-OFFICIAL_BSCCS_DC_WEBHOOK = os.environ.get("OFFICIAL_BSCCS_DC_WEBHOOK")
-UNOFFICIAL_BSCCS_DC_WEBHOOK = os.environ.get("UNOFFICIAL_BSCCS_DC_WEBHOOK")
+
+@lru_cache()
+def get_config():
+    with open("./config.json", "r") as config_file:
+        return json.loads(config_file.read())
+
 
 HEADERS = {"content-type": "application/json"}
 MAX_SEND_TRIES = 3
-
-IGNORE_TITLES = ["WhatsApp"]

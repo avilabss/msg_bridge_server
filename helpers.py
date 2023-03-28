@@ -18,18 +18,16 @@ def send_message_to_discord(webhook, message_by, message):
         pass
 
 
-def handle_wadc_bridge(form):
-    payload_title = form.get("title")
+def handle_wadc_bridge(config: dict, form_title: str, form_text: str):
+    payload_title = form_title
     parsed_title = [x.strip() for x in payload_title.split(":") if x.strip() != ""]
-    payload_text = f"```{form.get('text')}```"
+    payload_text = f"```{form_text}```"
     sender = parsed_title[-1] if len(parsed_title) >= 2 else "Unknown"
 
-    for title in IGNORE_TITLES:
+    for title in config["ignore-title-list"]:
         if title in payload_title:
             return
 
-    if "TSDC SYBSc. CS (OFFICIAL)" in payload_title:
-        send_message_to_discord(OFFICIAL_BSCCS_DC_WEBHOOK, sender, payload_text)
-
-    elif "BSC CS" in payload_title:
-        send_message_to_discord(UNOFFICIAL_BSCCS_DC_WEBHOOK, sender, payload_text)
+    for webhook_data in config["webhook-list"]:
+        if webhook_data["title"] in payload_title:
+            send_message_to_discord(webhook_data["webhook"], sender, payload_text)

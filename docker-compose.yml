@@ -1,0 +1,8 @@
+---
+services:
+  bridge-server:
+    build: .
+    container_name: bridge-server
+    restart: always
+    ports:
+      - 42069:42069
